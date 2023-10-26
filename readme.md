@@ -8,7 +8,7 @@ Application for management with tasks and your business
 
 ```
 1. Install docker and docker-compose on your machine if you don't have installed
-2. First run ./setup.sh command
+2. First run ./setup.sh script
 3. Than run ./prepare-db.sh to create database and populate db with seeds
 ```
 
