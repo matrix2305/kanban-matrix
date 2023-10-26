@@ -1,0 +1,669 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Kanban application",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:9900/api"
+        }
+    ],
+    "paths": {
+        "/labels/all": {
+            "get": {
+                "tags": [
+                    "label"
+                ],
+                "operationId": "getAllLabels",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/LabelDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/task-list/complete-tasks-in-list/{id}": {
+            "get": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "completeAllTasksInList",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/task-list/create-task": {
+            "put": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "createTask",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateTaskDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/task-list/create": {
+            "put": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "createTaskList",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateTaskListDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/task-list/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "deleteTaskList",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/task-list/all": {
+            "get": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "getAllTaskLists",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TaskListDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/task-list/completed-task-list": {
+            "get": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "getCompletedTaskList",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/task-list/move-task-to-another-list": {
+            "post": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "moveTaskToAnotherTaskList",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MoveTaskToAnotherTaskListDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/task-list/update-task": {
+            "post": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "updateTask",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTaskDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/task-list/update": {
+            "post": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "updateTaskList",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTaskListDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/task-list/update-order": {
+            "post": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "updateTaskListsOrder",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTaskListsOrderDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/task-list/update-tasks-order": {
+            "post": {
+                "tags": [
+                    "task-list"
+                ],
+                "operationId": "updateTasksOrderInTaskList",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTasksOrderInTaskListDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/user/all": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "operationId": "getAllUsers",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/user": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "operationId": "getAuthUser",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/user/login": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "operationId": "userLogin",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "title": "UserLoginRequest",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "UserLoginResponse",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/UserDTO"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/auth/user/logout": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "operationId": "userLogout",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CreateTaskDTO": {
+                "required": [
+                    "taskListId",
+                    "name",
+                    "description"
+                ],
+                "properties": {
+                    "taskListId": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "startOn": {
+                        "type": "string"
+                    },
+                    "dueOn": {
+                        "type": "string"
+                    },
+                    "usersIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "labelIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "CreateTaskListDTO": {
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "MoveTaskToAnotherTaskListDTO": {
+                "required": [
+                    "taskId",
+                    "taskListId",
+                    "movedToTaskListId"
+                ],
+                "properties": {
+                    "taskId": {
+                        "type": "integer"
+                    },
+                    "taskListId": {
+                        "type": "integer"
+                    },
+                    "movedToTaskListId": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateTaskDTO": {
+                "required": [
+                    "id",
+                    "taskListId",
+                    "name",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "taskListId": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "startOn": {
+                        "type": "string"
+                    },
+                    "dueOn": {
+                        "type": "string"
+                    },
+                    "usersIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "labelIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateTaskListDTO": {
+                "required": [
+                    "id",
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateTaskListsOrderDTO": {
+                "required": [
+                    "taskListIds"
+                ],
+                "properties": {
+                    "taskListIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateTasksOrderInTaskListDTO": {
+                "required": [
+                    "id",
+                    "taskIds"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "taskIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "LabelDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "order": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "startOn": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "dueOn": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserDTO"
+                        }
+                    },
+                    "labels": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LabelDTO"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "TaskListDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "order": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "completedTaskList": {
+                        "type": "boolean"
+                    },
+                    "tasks": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TaskDTO"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "UserDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "avatarUrl": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

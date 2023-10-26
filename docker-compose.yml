@@ -1,0 +1,76 @@
+version: "3.0"
+
+services:
+  kanban-api-app:
+    image: kanban-api-app
+    container_name: kanban-api-app
+    build:
+      context: ./
+      dockerfile: dockerfiles/Dockerfile
+    ports:
+      - "9900:80"
+    volumes:
+      - ./server-app/api:/var/www/html
+      - ./server-app/core:/var/www/core
+    networks:
+      - kanban-net
+  redis:
+    container_name: kanban-redis
+    image: redis:4
+    hostname: kanban-redis
+    volumes:
+      - redis:/data
+    networks:
+      - kanban-net
+    restart: always
+    ports:
+      - "9901:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+  mysql:
+    hostname: kanban-mysql
+    container_name: kanban-mysql
+    image: mysql:latest
+    restart: always
+    ports:
+      - "9902:3306"
+    networks:
+      - kanban-net
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+      MYSQL_TCP_PORT: 3306
+    volumes:
+      - ./dockerfiles/initialize-db.sql:/data/application/init.sql
+      - mysql:/var/lib/mysql
+    command: mysqld --sql-mode="" --max_connections=1000 --max_allowed_packet=325058560 --wait_timeout=28800 --interactive_timeout=28800 --user=root  --init-file /data/application/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 3s
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "9903:80"
+    networks:
+      - kanban-net
+    environment:
+      UPLOAD_LIMIT: 2G
+      PMA_HOST: "kanban-mysql"
+      PMA_USER: "root"
+      PMA_PASSWORD: ""
+      PMA_PORT: 3306
+    depends_on:
+      - mysql
+
+networks:
+  kanban-net:
+volumes:
+  redis:
+  mysql:
