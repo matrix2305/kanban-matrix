@@ -41,3 +41,9 @@ You can login with users from seed (use username or email), password for all use
   }
 ]
 ```
+
+Project addresses
+```
+Front end application - http://localhost:9904
+Rest api application - http://localhost:9900
+```
