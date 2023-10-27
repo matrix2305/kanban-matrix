@@ -1,6 +1,6 @@
 ## KANBAN MATRIX 2305
 
-Application for management with tasks and your business
+Application for management tasks and your business
 
 *** NOTE: Application can run only on linux OS ***
 
